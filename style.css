@@ -1,0 +1,56 @@
+body {
+}
+
+.center {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: .5em;
+}
+
+#instruction {
+  font-family: 'Roboto', sans-serif;
+  font-size: 48px;
+
+  grid-column: 1 / 4;
+  grid-row: 1 / 1;
+
+  background-color: #645DD7;
+  color: #fff;
+  border-radius: 3px;
+  padding: 0px;
+  font-size: 150%;
+}
+
+#player1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 74px;
+
+  grid-column: 1 / 1;
+  grid-row: 2 / 8;
+  background-color: #73abce;
+  color: #fff;
+  border-radius: 3px;
+  padding: 20px;
+  font-size: 150%;
+}
+
+#player2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 74px;
+
+  grid-column: 2 / 4;
+  grid-row: 2 / 8;
+
+  background-color: #73abce;
+  color: #fff;
+  border-radius: 3px;
+  padding: 20px;
+  font-size: 150%;
+}

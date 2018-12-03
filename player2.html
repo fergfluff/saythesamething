@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css?family=PT+Mono|Roboto:900" rel="stylesheet">
+
+
+
+</head>
+
+<body id="body">
+
+  <div class="wrapper">
+    <div id="instruction">
+      <p class="center" id="instructionText">Can you both write the same word? In three tries, with no communicating?</p>
+    </div>
+
+
+    <div class="center" id="player1">
+      <p class="center" id="player1Answer">Your Teammate's Word</p>
+    </div>
+
+    <div id="player2">
+      <p class="center" id="player2Answer">Type your word here</p>
+
+      <div class="center">
+        <input type="text" class="center" id="player2TextField" name="word">
+        <input class="button" class="center" type="submit" value="submit" id="player2SubmitButton">
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<script type="text/javascript">
+  //html variables
+  let player2TextField;
+  let player2Answer;
+  let player2SubmitButton;
+  let player1Answer;
+  let instructionText;
+
+  //connect html variables to html elements
+  player2TextField = document.getElementById('player2TextField');
+  player2SubmitButton = document.getElementById('player2SubmitButton');
+  player2Answer = document.getElementById('player2Answer');
+
+  player1Answer = document.getElementById('player1Answer');
+  instructionText = document.getElementById('instructionText');
+
+  //check to see if getting elements in html
+  player2SubmitButton.addEventListener("click", function() {
+    console.log("Player 2 pressed button");
+    console.log(player2TextField.value);
+    player2Answer.innerHTML = player2TextField.value;
+    instructionText.innerHTML = "Wait for your partner's response";
+
+
+    socket.emit('player2Answer', player2TextField.value);
+
+  });
+
+
+  var socket = io.connect();
+
+  socket.on('connect', function() {
+    console.log("Player 2 connected");
+
+  });
+
+  socket.on('tryAgain', function(tryAgainInstructions) {
+    console.log(tryAgainInstructions);
+    instructionText.innerHTML = tryAgainInstructions;
+  });
+
+  socket.on('youMatched', function(youMatchedInstructions) {
+    console.log(youMatchedInstructions);
+    instructionText.innerHTML = youMatchedInstructions;
+  });
+
+  // socket.on('test', function(data) {
+  //   console.log(data);
+  // });
+
+  socket.on('shareAnswers', function(data) {
+    console.log("player2's shareAnswers was triggered");
+    console.log(data);
+    player1Word = data.player1Submission;
+    player2Word = data.player2Submission;
+    console.log(player1Word, player2Word);
+    player1Answer.innerHTML = player1Word;
+    player2Answer.innerHTML = player2Word;
+  });
+
+</script>
+
+</html>
